@@ -1,0 +1,58 @@
+.advent-hotspot__stage {
+    position: relative;
+    max-width: 1000px;
+    margin: 10px 0;
+    cursor: crosshair;
+    user-select: none;
+    touch-action: none;
+}
+
+.advent-hotspot__stage img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.advent-hotspot__other,
+.advent-hotspot__current {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    box-sizing: border-box;
+    font-size: 11px;
+    font-weight: 600;
+    pointer-events: none;
+}
+
+.advent-hotspot__other {
+    border: 1px dashed rgb(255 255 255 / 0.8);
+    background: rgb(0 0 0 / 0.35);
+    color: #fff;
+}
+
+.advent-hotspot__current {
+    border: 2px solid #f47c00;
+    background: rgb(244 124 0 / 0.35);
+    color: #fff;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.5);
+}
+
+.advent-hotspot__current[hidden] {
+    display: none;
+}
+
+.advent-hotspot__fields {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 8px 16px;
+}
+
+.advent-hotspot__fields label {
+    display: grid;
+    gap: 4px;
+}
+
+.advent-hotspot__fields input {
+    width: 90px;
+}

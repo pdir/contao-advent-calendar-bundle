@@ -1,0 +1,36 @@
+{% extends '@Contao/content_element/_base.html.twig' %}
+
+{% set attributes = attrs(attributes|default).addClass('advent-winners') %}
+
+{% block content %}
+    {% if doors %}
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">{{ 'MSC.adventColDoor'|trans({}, 'contao_default') }}</th>
+                    <th scope="col">{{ 'MSC.adventColSponsor'|trans({}, 'contao_default') }}</th>
+                    <th scope="col">{{ 'MSC.adventColPrize'|trans({}, 'contao_default') }}</th>
+                    {% if has_winners %}<th scope="col">{{ 'MSC.adventColWinner'|trans({}, 'contao_default') }}</th>{% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for door in doors %}
+                    <tr{{ attrs().addClass('is-today', door.today) }}>
+                        <th scope="row">{{ door.day }}</th>
+                        <td>
+                            {% if door.sponsor_url %}
+                                <a href="{{ door.sponsor_url }}" target="_blank" rel="noopener">{{ door.sponsor }}</a>
+                            {% else %}
+                                {{ door.sponsor }}
+                            {% endif %}
+                        </td>
+                        <td>{{ door.prize }}</td>
+                        {% if has_winners %}<td>{{ door.winner ?: 'MSC.adventWinnerPending'|trans({}, 'contao_default') }}</td>{% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="advent-winners__empty">{{ 'MSC.adventNoWinners'|trans({}, 'contao_default') }}</p>
+    {% endif %}
+{% endblock %}

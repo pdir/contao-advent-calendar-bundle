@@ -1,0 +1,28 @@
+{% extends '@Contao/content_element/_base.html.twig' %}
+
+{% set attributes = attrs(attributes|default).addClass('advent-today') %}
+
+{% block content %}
+    {% if door and door.open %}
+        {% include '@Contao/component/_advent_door_card.html.twig' with {door, title_id: 'advent-today-' ~ element_id, url: calendar.url} only %}
+    {% elseif door %}
+        <div class="advent-card">
+            <p class="advent-card__kicker">{{ 'MSC.adventDoor'|trans([door.day], 'contao_default') }}</p>
+            <p class="advent-card__prize">{{ door.locked_text }}</p>
+            {% if calendar.url %}
+                <p class="advent-card__actions"><a class="advent-card__button" href="{{ calendar.url }}">{{ 'MSC.adventToCalendar'|trans({}, 'contao_default') }}</a></p>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="advent-card">
+            <p class="advent-card__kicker">{{ calendar.title }}</p>
+            <p class="advent-card__prize">{{ 'MSC.adventCountdown'|trans([days_left, first_door.opening_label], 'contao_default') }}</p>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block style %}
+    {% add 'advent_calendar_css' to stylesheets %}
+        <link rel="stylesheet" href="{{ asset('advent-calendar.css', 'pdir_advent_calendar') }}">
+    {% endadd %}
+{% endblock %}

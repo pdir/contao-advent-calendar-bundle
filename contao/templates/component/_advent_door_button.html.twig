@@ -1,0 +1,26 @@
+{#
+    Button of a door, either as hotspot on the calendar image or in the list.
+
+    Mandatory variables:
+        @var array  door
+        @var string dialog_prefix
+        @var bool   hotspot
+#}
+{% set door_attributes = attrs()
+    .set('type', 'button')
+    .addClass(['advent-door', hotspot ? 'advent-door--hotspot' : 'advent-door--list'])
+    .addClass(door.open ? 'is-open' : 'is-locked')
+    .addClass('is-today', door.today)
+    .set('data-advent-door', door.day)
+    .set('data-advent-dialog', dialog_prefix ~ door.day, door.open)
+    .set('aria-haspopup', 'dialog', door.open)
+    .set('data-advent-locked-text', door.locked_text, not door.open)
+    .set('aria-label', door.open ? 'MSC.adventDoorOpen'|trans([door.day], 'contao_default') : door.locked_text)
+    .addStyle({
+        left: door.hotspot.x|default(0) ~ '%',
+        top: door.hotspot.y|default(0) ~ '%',
+        width: door.hotspot.w|default(0) ~ '%',
+        height: door.hotspot.h|default(0) ~ '%',
+    }, hotspot and door.hotspot)
+%}
+<button{{ door_attributes }}><span aria-hidden="true">{{ door.day }}</span></button>

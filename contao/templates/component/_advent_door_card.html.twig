@@ -1,0 +1,72 @@
+{#
+    Detail card of an open door.
+
+    Mandatory variables:
+        @var array  door
+        @var string title_id
+
+    Optional variables:
+        @var bool   close  add a close button for the dialog
+        @var string url    link to the calendar page
+#}
+{% use '@Contao/component/_figure.html.twig' %}
+{% use '@Contao/component/_rich_text.html.twig' %}
+
+<div class="advent-card{{ door.today ? ' is-today' }}">
+    {% if close|default(false) %}
+        <form method="dialog" class="advent-card__close-form">
+            <button class="advent-card__close" aria-label="{{ 'MSC.close'|trans({}, 'contao_default') }}">×</button>
+        </form>
+    {% endif %}
+
+    <p class="advent-card__kicker" id="{{ title_id }}">{{ 'MSC.adventDoor'|trans([door.day], 'contao_default') }}</p>
+
+    {% if door.logo %}
+        <div class="advent-card__logo">
+            {% with {figure: door.logo} %}{{ block('figure_component') }}{% endwith %}
+        </div>
+    {% endif %}
+
+    {% if door.sponsor %}
+        <h3 class="advent-card__sponsor">{{ door.sponsor }}</h3>
+    {% endif %}
+
+    {% if door.prize %}
+        <p class="advent-card__label">{{ (door.today ? 'MSC.adventPrizeToday' : 'MSC.adventPrize')|trans({}, 'contao_default') }}</p>
+        <p class="advent-card__prize">{{ door.prize }}</p>
+    {% endif %}
+
+    {% if door.description %}
+        {% with {text: door.description, attributes: attrs().addClass('advent-card__text')} %}{{ block('rich_text_component') }}{% endwith %}
+    {% endif %}
+
+    {% if door.events|default %}
+        <div class="advent-card__events">
+            <p class="advent-card__label">{{ 'MSC.adventEvents'|trans({}, 'contao_default') }}</p>
+            <ul>
+                {% for event in door.events %}
+                    <li>
+                        {% if event.time %}<span class="advent-card__event-time">{{ event.time }}</span>{% endif %}
+                        {% if event.url %}<a href="{{ event.url }}">{{ event.title }}</a>{% else %}{{ event.title }}{% endif %}
+                        {% if event.location %}<span class="advent-card__event-location">{{ event.location }}</span>{% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if door.winner %}
+        <p class="advent-card__winner">{{ 'MSC.adventWinner'|trans({}, 'contao_default') }} <strong>{{ door.winner }}</strong></p>
+    {% endif %}
+
+    {% if door.sponsor_url or url|default %}
+        <p class="advent-card__actions">
+            {% if door.sponsor_url %}
+                <a class="advent-card__button" href="{{ door.sponsor_url }}" target="_blank" rel="noopener">{{ 'MSC.adventVisitSponsor'|trans({}, 'contao_default') }} <span aria-hidden="true">↗</span></a>
+            {% endif %}
+            {% if url|default %}
+                <a class="advent-card__button advent-card__button--secondary" href="{{ url }}">{{ 'MSC.adventToCalendar'|trans({}, 'contao_default') }}</a>
+            {% endif %}
+        </p>
+    {% endif %}
+</div>

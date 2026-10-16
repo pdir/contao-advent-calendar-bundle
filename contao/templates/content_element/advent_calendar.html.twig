@@ -1,0 +1,64 @@
+{% extends '@Contao/content_element/_base.html.twig' %}
+{% use '@Contao/component/_figure.html.twig' %}
+
+{% set attributes = attrs(attributes|default)
+    .addClass('advent-calendar')
+    .set('data-advent-calendar', calendar.id ~ '-' ~ calendar.year)
+%}
+
+{% block content %}
+    {% set dialog_prefix = 'advent-' ~ element_id ~ '-' %}
+
+    {% if image %}
+        <div class="advent-calendar__stage">
+            {% with {figure: image} %}{{ block('figure_component') }}{% endwith %}
+
+            <div class="advent-calendar__hotspots">
+                {% for door in doors|filter(door => door.hotspot) %}
+                    {% include '@Contao/component/_advent_door_button.html.twig' with {door, dialog_prefix, hotspot: true} only %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {# List of all doors, shown on small screens and if there is no image #}
+    <ol class="advent-calendar__list{{ not image ? ' is-always-visible' }}" aria-label="{{ 'MSC.adventDoors'|trans({}, 'contao_default') }}">
+        {% for door in doors %}
+            <li>{% include '@Contao/component/_advent_door_button.html.twig' with {door, dialog_prefix, hotspot: false} only %}</li>
+        {% endfor %}
+    </ol>
+
+    {% for door in doors|filter(door => door.open) %}
+        <dialog class="advent-calendar__dialog" id="{{ dialog_prefix ~ door.day }}" aria-labelledby="{{ dialog_prefix ~ door.day }}-title">
+            {% include '@Contao/component/_advent_door_card.html.twig' with {door, title_id: dialog_prefix ~ door.day ~ '-title', close: true} only %}
+        </dialog>
+    {% endfor %}
+
+    {% if doors|filter(door => not door.open)|length %}
+        <dialog class="advent-calendar__dialog" data-advent-locked aria-labelledby="{{ dialog_prefix }}locked-title">
+            <div class="advent-card">
+                <form method="dialog" class="advent-card__close-form">
+                    <button class="advent-card__close" aria-label="{{ 'MSC.close'|trans({}, 'contao_default') }}">×</button>
+                </form>
+                <p class="advent-card__kicker" id="{{ dialog_prefix }}locked-title">{{ 'MSC.adventLockedTitle'|trans({}, 'contao_default') }}</p>
+                <p data-advent-locked-text></p>
+            </div>
+        </dialog>
+    {% endif %}
+
+    {% if preview %}
+        <p class="advent-calendar__preview">{{ 'MSC.adventPreview'|trans({}, 'contao_default') }}</p>
+    {% endif %}
+{% endblock %}
+
+{% block style %}
+    {% add 'advent_calendar_css' to stylesheets %}
+        <link rel="stylesheet" href="{{ asset('advent-calendar.css', 'pdir_advent_calendar') }}">
+    {% endadd %}
+{% endblock %}
+
+{% block script %}
+    {% add 'advent_calendar_js' to body %}
+        <script src="{{ asset('advent-calendar.js', 'pdir_advent_calendar') }}" defer></script>
+    {% endadd %}
+{% endblock %}
