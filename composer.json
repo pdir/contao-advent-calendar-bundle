@@ -5,9 +5,12 @@
     "keywords": [
         "contao",
         "advent calendar",
-        "adventskalender"
+        "adventskalender",
+        "xmas",
+        "Weihnachten",
+        "Weihnachtskalender"
     ],
-    "license": "LGPL-3.0-or-later",git branch -M main
+    "license": "LGPL-3.0-or-later",
     "authors": [
         {
             "name": "pdir GmbH",
