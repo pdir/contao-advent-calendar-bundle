@@ -5,12 +5,19 @@
     "keywords": [
         "contao",
         "advent calendar",
+        "advent",
         "adventskalender",
+        "christmas",
         "xmas",
-        "Weihnachten",
-        "Weihnachtskalender"
+        "weihnachten",
+        "weihnachtskalender",
+        "gewinnspiel",
+        "giveaway",
+        "hotspot",
+        "image map",
+        "countdown"
     ],
-    "license": "LGPL-3.0-or-later",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "pdir GmbH",
