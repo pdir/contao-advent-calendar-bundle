@@ -1,0 +1,13 @@
+{
+    "name": "Advent Calendar",
+    "screenshot": "docs/promo-screenshot.jpg",
+    "de": {
+        "name": "Adventskalender",
+        "headline": "Adventskalender mit Hotspots und Gewinnen",
+        "features": ["24 Türchen als Hotspots im eigenen Bild", "Zeitgesteuert, ohne Spicken im Quelltext", "Türchen des Tages und Gewinnerliste"]
+    },
+    "en": {
+        "headline": "Advent calendar with hotspots and prizes",
+        "features": ["24 doors as hotspots on your own image", "Timed doors, no peeking in the source", "Door of the day and list of winners"]
+    }
+}
