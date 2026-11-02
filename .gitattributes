@@ -1,0 +1,7 @@
+# Not part of the Composer package
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.promo.json export-ignore
+/docs export-ignore
+/phpunit.xml.dist export-ignore
+/tests export-ignore
